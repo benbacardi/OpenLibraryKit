@@ -1,13 +1,13 @@
 {
-  "originHash" : "eb609bceab3615d827c5a44e3f6cf4c32e91814057396a68da77a46db6a05b52",
+  "originHash" : "ff8a0118c60208cb2f98dbd47467dc784805dc853f8c6e0a25dd3504f252d877",
   "pins" : [
     {
       "identity" : "apiclient",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/koshakji/APIClient",
       "state" : {
-        "branch" : "improved-error-handling",
-        "revision" : "0912eb3de9f89199530a480ecbf7daa5edee3f44"
+        "revision" : "cf892fdf5a1d5be6c5f20c2313ced56769862bff",
+        "version" : "0.0.8"
       }
     }
   ],

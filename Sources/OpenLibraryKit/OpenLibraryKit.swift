@@ -59,12 +59,8 @@ class OpenLibrary {
     func search(_ searchTerm: String, offset: Int = 0, limit: Int = 200) async -> OpenLibrarySearchResponse? {
         do {
             return try await client.make(request: OpenLibraryRequests.searchRequest(), queries: OpenLibrarySearchQuery(q: searchTerm, offset: offset, limit: limit)).data
-        } catch let error as OpenLibraryAPIError {
-            if let openLibraryError = error.responseData {
-                print("Error in API response: \(openLibraryError.error) \(error.responseMeta?.statusCode ?? 0)")
-            } else {
-                print("Error in API response: \(error)")
-            }
+        } catch let error as APIClientError<OpenLibraryError> {
+            print("Error in API response: \(error.localizedDescription)")
         } catch {
             print("Error while searching: \(error.localizedDescription)")
         }
@@ -74,12 +70,8 @@ class OpenLibrary {
     func search(isbn: String) async -> OpenLibraryEdition? {
         do {
             return try await client.make(request: OpenLibraryRequests.isbnRequest(for: isbn)).data
-        } catch let error as OpenLibraryAPIError {
-            if let openLibraryError = error.responseData {
-                print("Error in API response: \(openLibraryError.error) \(error.responseMeta?.statusCode ?? 0)")
-            } else {
-                print("Error in API response: \(error)")
-            }
+        } catch let error as APIClientError<OpenLibraryError> {
+            print("Error in API response: \(error.localizedDescription)")
         } catch {
             print("Error searching by ISBN: \(error.localizedDescription)")
         }
@@ -89,12 +81,8 @@ class OpenLibrary {
     func getDetails(forWorkId workId: String) async -> OpenLibraryWork? {
         do {
             return try await client.make(request: OpenLibraryRequests.worksRequest(for: workId)).data
-        } catch let error as OpenLibraryAPIError {
-            if let openLibraryError = error.responseData {
-                print("Error in API response: \(openLibraryError.error) \(error.responseMeta?.statusCode ?? 0)")
-            } else {
-                print("Error in API response: \(error)")
-            }
+        } catch let error as APIClientError<OpenLibraryError> {
+            print("Error in API response: \(error.localizedDescription)")
         } catch {
             print("Error fetching work: \(error.localizedDescription)")
         }
@@ -109,12 +97,8 @@ class OpenLibrary {
             let author = try await client.make(request: OpenLibraryRequests.authorsRequest(for: authorId)).data
             authorCache[authorId] = author
             return author
-        } catch let error as OpenLibraryAPIError {
-            if let openLibraryError = error.responseData {
-                print("Error in API response: \(openLibraryError.error) \(error.responseMeta?.statusCode ?? 0)")
-            } else {
-                print("Error in API response: \(error)")
-            }
+        } catch let error as APIClientError<OpenLibraryError> {
+            print("Error in API response: \(error.localizedDescription)")
         } catch {
             print("Error fetching author: \(error.localizedDescription)")
         }
@@ -124,12 +108,8 @@ class OpenLibrary {
     func getWorks(forAuthorId authorId: String) async -> OpenLibraryWorksResponse? {
         do {
             return try await client.make(request: OpenLibraryRequests.worksRequest(forAuthor: authorId)).data
-        } catch let error as OpenLibraryAPIError {
-            if let openLibraryError = error.responseData {
-                print("Error in API response: \(openLibraryError.error) \(error.responseMeta?.statusCode ?? 0)")
-            } else {
-                print("Error in API response: \(error)")
-            }
+        } catch let error as APIClientError<OpenLibraryError> {
+            print("Error in API response: \(error.localizedDescription)")
         } catch {
             print("Error fetching works: \(error.localizedDescription)")
         }
@@ -139,12 +119,8 @@ class OpenLibrary {
     func getEditions(forWorkId workId: String) async -> OpenLibraryEditionResponse? {
         do {
             return try await client.make(request: OpenLibraryRequests.editionsRequest(for: workId)).data
-        } catch let error as OpenLibraryAPIError {
-            if let openLibraryError = error.responseData {
-                print("Error in API response: \(openLibraryError.error) \(error.responseMeta?.statusCode ?? 0)")
-            } else {
-                print("Error in API response: \(error)")
-            }
+        } catch let error as APIClientError<OpenLibraryError> {
+            print("Error in API response: \(error.localizedDescription)")
         } catch {
             print("Error fetching editions: \(error.localizedDescription)")
         }

@@ -16,7 +16,7 @@ let package = Package(
             targets: ["OpenLibraryKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/koshakji/APIClient", branch: "improved-error-handling"),
+        .package(url: "https://github.com/koshakji/APIClient", from: "0.0.8"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
