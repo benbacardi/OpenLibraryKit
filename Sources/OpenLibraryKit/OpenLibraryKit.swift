@@ -51,12 +51,12 @@ public typealias OpenLibraryAPIError = APIClientError<OpenLibraryError>
 
 public class OpenLibrary {
     
-    static let shared = OpenLibrary()
+    public static let shared = OpenLibrary()
     
-    let client = APIClient()
+    private let client = APIClient()
     private var authorCache: [String: OpenLibraryAuthor] = [:]
     
-    func search(_ searchTerm: String, offset: Int = 0, limit: Int = 200) async -> OpenLibrarySearchResponse? {
+    public func search(_ searchTerm: String, offset: Int = 0, limit: Int = 200) async -> OpenLibrarySearchResponse? {
         do {
             return try await client.make(request: OpenLibraryRequests.searchRequest(), queries: OpenLibrarySearchQuery(q: searchTerm, offset: offset, limit: limit)).data
         } catch let error as APIClientError<OpenLibraryError> {
@@ -67,7 +67,7 @@ public class OpenLibrary {
         return nil
     }
     
-    func search(isbn: String) async -> OpenLibraryEdition? {
+    public func search(isbn: String) async -> OpenLibraryEdition? {
         do {
             return try await client.make(request: OpenLibraryRequests.isbnRequest(for: isbn)).data
         } catch let error as APIClientError<OpenLibraryError> {
@@ -78,7 +78,7 @@ public class OpenLibrary {
         return nil
     }
     
-    func getDetails(forWorkId workId: String) async -> OpenLibraryWork? {
+    public func getDetails(forWorkId workId: String) async -> OpenLibraryWork? {
         do {
             return try await client.make(request: OpenLibraryRequests.worksRequest(for: workId)).data
         } catch let error as APIClientError<OpenLibraryError> {
@@ -89,7 +89,7 @@ public class OpenLibrary {
         return nil
     }
     
-    func getAuthor(withId authorId: String) async -> OpenLibraryAuthor? {
+    public func getAuthor(withId authorId: String) async -> OpenLibraryAuthor? {
         if let author = authorCache[authorId] {
             return author
         }
@@ -105,7 +105,7 @@ public class OpenLibrary {
         return nil
     }
     
-    func getWorks(forAuthorId authorId: String) async -> OpenLibraryWorksResponse? {
+    public func getWorks(forAuthorId authorId: String) async -> OpenLibraryWorksResponse? {
         do {
             return try await client.make(request: OpenLibraryRequests.worksRequest(forAuthor: authorId)).data
         } catch let error as APIClientError<OpenLibraryError> {
@@ -116,7 +116,7 @@ public class OpenLibrary {
         return nil
     }
     
-    func getEditions(forWorkId workId: String) async -> OpenLibraryEditionResponse? {
+    public func getEditions(forWorkId workId: String) async -> OpenLibraryEditionResponse? {
         do {
             return try await client.make(request: OpenLibraryRequests.editionsRequest(for: workId)).data
         } catch let error as APIClientError<OpenLibraryError> {
@@ -127,11 +127,11 @@ public class OpenLibrary {
         return nil
     }
     
-    func getEditions(for work: OpenLibraryWork) async -> OpenLibraryEditionResponse? {
+    public func getEditions(for work: OpenLibraryWork) async -> OpenLibraryEditionResponse? {
         return await getEditions(forWorkId: work.id)
     }
     
-    func getEditions(for edition: OpenLibraryEdition) async -> OpenLibraryEditionResponse? {
+    public func getEditions(for edition: OpenLibraryEdition) async -> OpenLibraryEditionResponse? {
         return await getEditions(forWorkId: edition.workId)
     }
 }
