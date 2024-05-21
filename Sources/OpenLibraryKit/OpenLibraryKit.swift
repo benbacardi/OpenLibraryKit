@@ -60,7 +60,12 @@ public class OpenLibrary {
         do {
             return try await client.make(request: OpenLibraryRequests.searchRequest(), queries: OpenLibrarySearchQuery(q: searchTerm, offset: offset, limit: limit)).data
         } catch let error as APIClientError<OpenLibraryError> {
-            print("Error in API response: \(error.localizedDescription)")
+            switch error {
+            case .responseError(let olError, meta: let meta, underlyingError: let underlying):
+                print("OL: \(olError) Meta: \(meta.debugDescription) Underlying: \(underlying)")
+            default:
+                print("Error in API response: \(error.localizedDescription)")
+            }
         } catch {
             print("Error while searching: \(error.localizedDescription)")
         }
