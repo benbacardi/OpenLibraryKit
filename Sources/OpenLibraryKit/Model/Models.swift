@@ -8,43 +8,43 @@
 import Foundation
 import APIClient
 
-struct OpenLibraryError: Codable, LocalizedError {
-    let key: String
-    let error: String
+public struct OpenLibraryError: Codable, LocalizedError {
+    public let key: String
+    public let error: String
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         error
     }
 }
 
-struct OpenLibraryLink: Codable {
-    let title: String
-    let url: URL
+public struct OpenLibraryLink: Codable {
+    public let title: String
+    public let url: URL
 }
 
-struct OpenLibraryCoverImage: Codable {
-    let id: Int
+public struct OpenLibraryCoverImage: Codable {
+    public let id: Int
     
-    enum CoverImageSize: String {
+    public enum CoverImageSize: String {
         case small = "S"
         case medium = "M"
         case large = "L"
     }
     
-    func url(size: CoverImageSize = .small) -> URL? {
+    public func url(size: CoverImageSize = .small) -> URL? {
         return URL(string: "\(OpenLibraryConstants.coverURL)id/\(id)-\(size.rawValue).jpg")
     }
 }
 
 /// https://openlibrary.org/authors/OL34184A.json
-struct OpenLibraryAuthor: Codable, IdentifiableFromKey {
-    let key: String
-    let name: String
-    let personalName: String?
-    let alternateNames: [String]?
-    let photos: [Int]?
-    let bio: String?
-    let links: [OpenLibraryLink]?
+public struct OpenLibraryAuthor: Codable, IdentifiableFromKey {
+    public let key: String
+    public let name: String
+    public let personalName: String?
+    public let alternateNames: [String]?
+    public let photos: [Int]?
+    public let bio: String?
+    public let links: [OpenLibraryLink]?
     
     enum CodingKeys: String, CodingKey {
         case key
@@ -56,7 +56,7 @@ struct OpenLibraryAuthor: Codable, IdentifiableFromKey {
         case links
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         key = try container.decode(String.self, forKey: .key)
         name = try container.decode(String.self, forKey: .name)
@@ -69,16 +69,16 @@ struct OpenLibraryAuthor: Codable, IdentifiableFromKey {
 }
 
 /// https://openlibrary.org/works/OL45804W.json
-struct OpenLibraryWork: Decodable, IdentifiableFromKey {
-    let title: String
-    let key: String
-    let authors: [String]
-    let description: String?
-    let covers: [OpenLibraryCoverImage]
-    let subjectPlaces: [String]?
-    let subjects: [String]?
-    let subjectPeople: [String]?
-    let subjectTimes: [String]?
+public struct OpenLibraryWork: Decodable, IdentifiableFromKey {
+    public let title: String
+    public let key: String
+    public let authors: [String]
+    public let description: String?
+    public let covers: [OpenLibraryCoverImage]
+    public let subjectPlaces: [String]?
+    public let subjects: [String]?
+    public let subjectPeople: [String]?
+    public let subjectTimes: [String]?
     
     enum CodingKeys: String, CodingKey {
         case title
@@ -92,7 +92,7 @@ struct OpenLibraryWork: Decodable, IdentifiableFromKey {
         case subjectTimes = "subject_times"
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         title = try container.decode(String.self, forKey: .title)
         key = try container.decode(String.self, forKey: .key)
@@ -111,21 +111,21 @@ struct OpenLibraryWork: Decodable, IdentifiableFromKey {
 }
 
 /// https://openlibrary.org/works/OL45804W/editions.json
-struct OpenLibraryEdition: Codable, IdentifiableFromKey {
-    let title: String
-    let key: String
-    let authors: [String]
-    let isbn13: [String]?
-    let isbn10: [String]?
-    let publishDate: String?
-    let publishers: [String]?
-    let editionName: String?
-    let physicalFormat: String?
-    let subjects: [String]?
-    let fullTitle: String?
-    let works: [String]
-    let covers: [OpenLibraryCoverImage]
-    let numberOfPages: Int?
+public struct OpenLibraryEdition: Codable, IdentifiableFromKey {
+    public let title: String
+    public let key: String
+    public let authors: [String]
+    public let isbn13: [String]?
+    public let isbn10: [String]?
+    public let publishDate: String?
+    public let publishers: [String]?
+    public let editionName: String?
+    public let physicalFormat: String?
+    public let subjects: [String]?
+    public let fullTitle: String?
+    public let works: [String]
+    public let covers: [OpenLibraryCoverImage]
+    public let numberOfPages: Int?
     
     enum CodingKeys: String, CodingKey {
         case title
@@ -144,7 +144,7 @@ struct OpenLibraryEdition: Codable, IdentifiableFromKey {
         case numberOfPages = "number_of_pages"
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         title = try container.decode(String.self, forKey: .title)
         key = try container.decode(String.self, forKey: .key)
@@ -166,7 +166,7 @@ struct OpenLibraryEdition: Codable, IdentifiableFromKey {
         }
     }
     
-    var workId: String {
+    public var workId: String {
         if let workId = works.first?.split(separator: "/").last {
             return String(workId)
         } else {
@@ -175,47 +175,47 @@ struct OpenLibraryEdition: Codable, IdentifiableFromKey {
     }
 }
 
-struct OpenLibraryResponseLinks: Codable {
-    let selfLink: String
-    let next: String?
+public struct OpenLibraryResponseLinks: Codable {
+    public let selfLink: String
+    public let next: String?
     
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case selfLink = "self"
         case next
     }
 }
 
-struct OpenLibraryEditionResponse: Codable {
-    let links: OpenLibraryResponseLinks
-    let size: Int
-    let entries: [OpenLibraryEdition]
+public struct OpenLibraryEditionResponse: Codable {
+    public let links: OpenLibraryResponseLinks
+    public let size: Int
+    public let entries: [OpenLibraryEdition]
 }
 
-struct OpenLibraryWorksResponse: Decodable {
-    let links: OpenLibraryResponseLinks
-    let size: Int
-    let entries: [OpenLibraryWork]
+public struct OpenLibraryWorksResponse: Decodable {
+    public let links: OpenLibraryResponseLinks
+    public let size: Int
+    public let entries: [OpenLibraryWork]
 }
 
-struct OpenLibrarySearchResultDoc: IdentifiableFromKey {
-    let title: String
-    let key: String
+public struct OpenLibrarySearchResultDoc: IdentifiableFromKey {
+    public let title: String
+    public let key: String
 }
 
-struct OpenLibrarySearchResponse: Decodable {
-    let numFound: Int
-    let start: Int
-    let numFoundExact: Bool
-    let offset: Int?
-    let docs: [OpenLibrarySearchResultDoc]
+public struct OpenLibrarySearchResponse: Decodable {
+    public let numFound: Int
+    public let start: Int
+    public let numFoundExact: Bool
+    public let offset: Int?
+    public let docs: [OpenLibrarySearchResultDoc]
 }
 
-struct OpenLibrarySearchQuery: StringKeyValueConvertible {
-    let q: String
-    var offset: Int = 0
-    var limit: Int = 100
+public struct OpenLibrarySearchQuery: StringKeyValueConvertible {
+    public let q: String
+    public var offset: Int = 0
+    public var limit: Int = 100
     
-    func keyValues() -> [KeyValuePair<String>] {
+    public func keyValues() -> [KeyValuePair<String>] {
         return [
             ("q", q),
             ("offset", String(offset)),

@@ -7,13 +7,13 @@
 
 import Foundation
 
-internal protocol IdentifiableFromKey: Identifiable, Decodable {
+public protocol IdentifiableFromKey: Identifiable, Decodable {
     var key: String { get }
     var id: String { get }
 }
 
 extension IdentifiableFromKey {
-    var id: String {
+    public var id: String {
         if let objectId = key.split(separator: "/").last {
             return String(objectId)
         } else {

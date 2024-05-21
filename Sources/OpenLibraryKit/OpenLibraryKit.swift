@@ -47,9 +47,9 @@ enum OpenLibraryRequests {
     
 }
 
-typealias OpenLibraryAPIError = APIClientError<OpenLibraryError>
+public typealias OpenLibraryAPIError = APIClientError<OpenLibraryError>
 
-class OpenLibrary {
+public class OpenLibrary {
     
     static let shared = OpenLibrary()
     
