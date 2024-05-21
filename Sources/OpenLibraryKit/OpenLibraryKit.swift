@@ -62,14 +62,14 @@ public class OpenLibrary {
         } catch let error as APIClientError<OpenLibraryError> {
             switch error {
             case .responseError(let olError, meta: let meta, underlyingError: let underlying):
-                print("OL: \(olError) Meta: \(meta.debugDescription) Underlying: \(underlying)")
+                print("Term: \(searchTerm) OL: \(olError) Meta: \(meta.debugDescription) Underlying: \(underlying)")
             case .unexpectedResponseError(data: let data, meta: let meta, underlyingError: let underlying):
-                print("Data: \(String(data: data, encoding: .utf8).debugDescription) Meta: \(meta.debugDescription) Underlying: \(underlying)")
+                print("Term: \(searchTerm) Data: \(String(data: data, encoding: .utf8).debugDescription) Meta: \(meta.debugDescription) Underlying: \(underlying)")
             case .otherError(let error):
-                print("Error in API response: \(error.localizedDescription)")
+                print("Term: \(searchTerm) Error in API response: \(error.localizedDescription)")
             }
         } catch {
-            print("Error while searching: \(error.localizedDescription)")
+            print("Term: \(searchTerm) Error while searching: \(error.localizedDescription)")
         }
         return nil
     }
