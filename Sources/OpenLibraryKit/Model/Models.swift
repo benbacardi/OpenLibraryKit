@@ -200,6 +200,24 @@ public struct OpenLibraryWorksResponse: Decodable {
 public struct OpenLibrarySearchResultDoc: IdentifiableFromKey {
     public let title: String
     public let key: String
+    public let cover: OpenLibraryCoverImage?
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case key
+        case coverId = "cover_i"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        title = try container.decode(String.self, forKey: .title)
+        key = try container.decode(String.self, forKey: .key)
+        if let coverId = try container.decodeIfPresent(Int.self, forKey: .coverId) {
+            cover = OpenLibraryCoverImage(id: coverId)
+        } else {
+            cover = nil
+        }
+    }
 }
 
 public struct OpenLibrarySearchResponse: Decodable {
