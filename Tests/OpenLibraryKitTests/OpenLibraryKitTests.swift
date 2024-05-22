@@ -3,24 +3,24 @@ import XCTest
 
 final class OpenLibraryKitTests: XCTestCase {
     
-//    func testSearch() async throws {
-//        let searchTerm = "the lord of the rings"
-//        print("Searching for \(searchTerm)")
-//        var offset: Int = 0
-//        while true {
-//            if let response = await OpenLibrary.shared.search(searchTerm, offset: offset) {
-//                print("Results: \(response.numFound) (\(response.docs.count)) \(response.offset ?? 9999999)")
-//                if offset + response.docs.count >= response.numFound {
-//                    break
-//                } else {
-//                    offset += response.docs.count
-//                }
-//            } else {
-//                print("No results.")
-//                break
-//            }
-//        }
-//    }
+    func testSearch() async throws {
+        let searchTerm = "day of fallen night"
+        print("Searching for \(searchTerm)")
+        var offset: Int = 0
+        while true {
+            if let response = await OpenLibrary.shared.search(searchTerm, offset: offset) {
+                print("Results: \(response.numFound) (\(response.docs.count)) \(response.offset ?? 9999999)")
+                if offset + response.docs.count >= response.numFound {
+                    break
+                } else {
+                    offset += response.docs.count
+                }
+            } else {
+                print("No results.")
+                break
+            }
+        }
+    }
     
 //    func testAuthors() async throws {
 //        let authorId = "OL34184A"

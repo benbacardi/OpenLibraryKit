@@ -200,24 +200,24 @@ public struct OpenLibraryWorksResponse: Decodable {
 public struct OpenLibrarySearchResultDoc: IdentifiableFromKey {
     public let title: String
     public let key: String
-    public let authorName: String?
-    public let authorKey: String?
+    public let authorNames: [String]
+    public let authorKeys: [String]
     public let cover: OpenLibraryCoverImage?
     
     enum CodingKeys: String, CodingKey {
         case title
         case key
         case coverId = "cover_i"
-        case authorName = "author_name"
-        case authorKey = "author_key"
+        case authorNames = "author_name"
+        case authorKeys = "author_key"
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         title = try container.decode(String.self, forKey: .title)
         key = try container.decode(String.self, forKey: .key)
-        authorName = try container.decodeIfPresent(String.self, forKey: .authorName)
-        authorKey = try container.decodeIfPresent(String.self, forKey: .authorKey)
+        authorNames = try container.decodeIfPresent([String].self, forKey: .authorNames) ?? []
+        authorKeys = try container.decodeIfPresent([String].self, forKey: .authorKeys) ?? []
         if let coverId = try container.decodeIfPresent(Int.self, forKey: .coverId) {
             cover = OpenLibraryCoverImage(id: coverId)
         } else {
